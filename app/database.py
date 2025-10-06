@@ -34,6 +34,10 @@ def create_dummy_data():
         Rack(name="R3 Test", description="Rack 3 for testing", serial_number="SN-021", unit_capacity=8, max_power_consumption=1000),
         Rack(name="R4 Test", description="Rack 4 for testing", serial_number="SN-022", unit_capacity=8, max_power_consumption=1200),
         Rack(name="R5 Test", description="Rack 5 for testing", serial_number="SN-023", unit_capacity=8, max_power_consumption=1100),
+        #test 2
+        Rack(name="R6 Test 2", description="Rack 6 for tc 2", serial_number="SN-020-001", unit_capacity=6, max_power_consumption=10000),
+        Rack(name="R7 Test 2", description="Rack 7 for tc 2", serial_number="SN-020-002", unit_capacity=4, max_power_consumption=1000),
+        Rack(name="R8 Test 2", description="Rack 8 for tc 2", serial_number="SN-020-003", unit_capacity=10, max_power_consumption=5000),
     ]
 
     devices_for_test = [
@@ -47,10 +51,27 @@ def create_dummy_data():
                unit_size=2, power_consumption=200),
         Device(name="D600 Test", description="D6 used for testing...", serial_number="SN-010", 
                unit_size=3, power_consumption=600),
-        Device(name="D800 Test", description="D8 used for testing...", serial_number="SN-0100", 
-               unit_size=4, power_consumption=800),
-        Device(name="D1000 Test", description="D10 used for testing...", serial_number="SN-0101", 
-               unit_size=4, power_consumption=1000),
+        #test 2
+        Device(name="D1000 Test 2", description="D10 used for testing...", serial_number="SN-0101-003", 
+               unit_size=2, power_consumption=1000),
+        Device(name="D800_1 Test 2", description="D8 used for testing...", serial_number="SN-0100-001", 
+            unit_size=2, power_consumption=800),
+        Device(name="D800_2 Test 2", description="D8 used for testing...", serial_number="SN-0100-002", 
+               unit_size=2, power_consumption=800),
+        Device(name="D800_3 Test 2", description="D8 used for testing...", serial_number="SN-0100-004", 
+               unit_size=2, power_consumption=800),
+        Device(name="D700_1 Test 2", description="D7 used for testing...", serial_number="SN-0100-005", 
+               unit_size=1, power_consumption=700),
+        Device(name="D700_2 Test 2", description="D7 used for testing...", serial_number="SN-0100-006", 
+               unit_size=1, power_consumption=700),
+        Device(name="D600_3 Test 2", description="D6 used for testing...", serial_number="SN-0100-007", 
+            unit_size=1, power_consumption=600),
+        Device(name="D600_1 Test 2", description="D6 used for testing...", serial_number="SN-0100-008", 
+            unit_size=1, power_consumption=600),
+        Device(name="D600_2 Test 2", description="D6 used for testing...", serial_number="SN-0100-009", 
+            unit_size=1, power_consumption=600),
+        Device(name="D500 Test 2", description="D5 used for testing...", serial_number="SN-0100-010", 
+            unit_size=1, power_consumption=500),
     ]
 
     with Session(engine) as session:

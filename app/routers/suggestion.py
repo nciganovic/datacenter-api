@@ -7,7 +7,7 @@ from app.models import Rack, Device
 router = APIRouter(prefix="/suggestion", tags=["suggestion"])
 
 @router.get("/")
-def suggest(
+async def suggest(
     device_ids: list[int] = Query(default=[]),
     rack_ids: list[int] = Query(default=[]),
     session: Session = Depends(get_session)
@@ -16,17 +16,35 @@ def suggest(
     #get racks and sort by consumption
     select_racks = select(Rack).where(Rack.id.in_(rack_ids)).order_by(Rack.max_power_consumption.desc())
     racks_list: list[Rack] = session.exec(select_racks).all()
-    
+
     #get devices and sort by consumption
     select_devices = select(Device).where(Device.id.in_(device_ids)).order_by(Device.power_consumption.desc())
     devices_list: list[Device] = session.exec(select_devices).all()
+
+    #Test if total unit size or power consumption of devices is larger then the racks 
+    #if yes go to early exit and return error message
+    rack_max_units = sum([r.unit_capacity for r in racks_list])
+    rack_max_pow = sum([r.max_power_consumption for r in racks_list])
+    device_max_untis = sum([r.unit_size for r in devices_list])
+    device_max_pow = sum([r.power_consumption for r in devices_list])
+
+    if(device_max_untis > rack_max_units):
+        raise HTTPException(
+                status_code=400,
+                detail="Not enough space to store all devices"
+            )   
+    if(device_max_pow > rack_max_pow):
+        raise HTTPException(
+                status_code=400,
+                detail="Not enough power to store all devices"
+            )
 
     devices_in_racks: list[DevicesInRacks] = []
 
     capacity_arr: list[int] = [] 
     power_arr: list[int] = []
 
-    #initalize zeros in heler arrays
+    #initalize zeros in helper arrays
     for i in range(len(racks_list)):
         capacity_arr.append(0)
         power_arr.append(0)
@@ -62,7 +80,7 @@ def suggest(
         else:
             raise HTTPException(
                 status_code=400,
-                detail=f"Not enough space or power to store all devices"
+                detail="Not enough space or power to store all devices"
             )
 
     response: list[SuggestionInfo] = []

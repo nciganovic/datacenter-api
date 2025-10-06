@@ -1,5 +1,3 @@
-from typing import Optional
-from pydantic import PrivateAttr
 from sqlmodel import CheckConstraint, Field, Relationship, SQLModel, create_engine
 
 class DeviceBase(SQLModel):
@@ -45,4 +43,9 @@ class Rack(RackBase, table=True):
 
 class RackForm(RackBase):
     id: int
-    power_consuption: int
+    power_consumption: int
+
+
+class AddDeviceForm(SQLModel):
+    rack_id: int
+    device_id: int
